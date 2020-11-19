@@ -6,6 +6,7 @@ const cors = require('cors');
 
 //Import Route
 const authRoute = require('./routes/auth');
+const postRoute = require('./routes/post');
 
 dotenv.config();
 
@@ -27,5 +28,7 @@ app.use(cors());
 
 // Route middlewware
 app.use('/api/user', authRoute);
+app.use('/api/posts', postRoute);
+
 
 app.listen(5000, () => console.log('App is here'));
