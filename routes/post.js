@@ -1,14 +1,11 @@
 const router = require('express').Router();
+const User = require('../models/User');
 const verifyToken = require('./verifyToken');
 
 
-router.get('/', verify, (req, res) => {
-    res.json({
-        posts : {
-            title: 'my favourite song', 
-            description: '2pac'
-        }
-    })
+router.get('/', verifyToken, (req, res) => {
+    res.send(req.user);
+    User.findOne({_id: req.user})
 })
 
 
