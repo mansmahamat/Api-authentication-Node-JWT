@@ -8,7 +8,7 @@
     "npm": "6.13.4"
   },
   "scripts": {
-    "start": "nodemon built/index.js",
+    "start": "node built/index.js",
     "build": "tsc",
     "lint": "eslint . & echo 'lint ok' ",
     "lint-fix": "eslint --fix . ",
