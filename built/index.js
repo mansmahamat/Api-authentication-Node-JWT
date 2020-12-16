@@ -14,9 +14,7 @@ const mentors = require('./routes/mentors');
 const app = express_1.default();
 dotenv_1.default.config();
 //Connect Db
-mongoose_1.default.connect(
-//@ts-ignore
-process.env.DB_CONNECT, {
+mongoose_1.default.connect(process.env.DB_CONNECT, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
