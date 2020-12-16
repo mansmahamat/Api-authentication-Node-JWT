@@ -16,7 +16,7 @@ dotenv.config();
 
 //Connect Db
 mongoose.connect(
-  //@ts-ignore
+  
     process.env.DB_CONNECT!,
 {
     useNewUrlParser: true,
