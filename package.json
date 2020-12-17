@@ -2,7 +2,7 @@
   "name": "nodeapi-deved",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "built/index.js",
   "engines": {
     "node": "12.14.1",
     "npm": "6.13.4"
