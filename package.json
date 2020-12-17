@@ -2,13 +2,13 @@
   "name": "nodeapi-deved",
   "version": "1.0.0",
   "description": "",
-  "main": "built/index.js",
+  "main": "src/index.ts",
   "engines": {
     "node": "12.14.1",
     "npm": "6.13.4"
   },
   "scripts": {
-    "start": "node built/index.js",
+    "start": "npm run dev",
     "build": "tsc",
     "lint": "eslint . & echo 'lint ok' ",
     "lint-fix": "eslint --fix . ",
