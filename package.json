@@ -11,7 +11,7 @@
     "start": "node built/index.js",
     "build": "tsc",
     "lint": "eslint . & echo 'lint ok' ",
-    "postinstall": "tsc && mv -i -v public built/ && rm -v -rf src",
+    "postinstall": "tsc && mv -i -v built/ && rm -v -rf src",
     "lint-fix": "eslint --fix . ",
     "deploy": "git add . && git commit -m Heroku && git push heroku prod",
     "dev": "ts-node-dev --transpile-only --respawn  ./src/index.ts",
