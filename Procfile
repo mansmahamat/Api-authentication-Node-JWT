@@ -1,1 +1,1 @@
-web:node built/index.js
+web:nodemon built/index.js 
