@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const updateMentors = require('../controllers/updateMentors');
 const deleteMentors = require('../controllers/deleteMentors');
+const getOneMentors = require('../controllers/getOneMentors');
 
 const Mentor = require('../models/Mentor');
 
@@ -67,7 +68,7 @@ router.get('/mentors' ,async (req, res) => {
        
 });
 
-//Òrouter.get('/mentor/:id',  getOneMentors.findOne)
+router.get('/mentor/:id',  getOneMentors.findOne)
 
 router.patch('/mentors/:id', updateMentors.update)
 

@@ -1,4 +1,4 @@
-/* const Mentor = require("../models/Mentor");
+ const Mentor = require("../models/Mentor");
 
 exports.findOne = (req, res) => {
     const id = req.params.id;
@@ -14,4 +14,4 @@ exports.findOne = (req, res) => {
           .status(500)
           .send({ message: "Error retrieving Tutorial with id=" + id });
       });
-  }; */
+  }; 
