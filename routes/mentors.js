@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const updateMentors = require('../controllers/updateMentors');
 const deleteMentors = require('../controllers/deleteMentors');
-const getOneMentors = require('../controllers/getOneMentors');
+
 const Mentor = require('../models/Mentor');
-const verifyToken = require('./verifyToken');
+
 const multer = require('multer')
 
 const storage = multer.diskStorage({
@@ -32,7 +32,7 @@ const upload = multer({storage: storage} )
 
 
 router.post('/mentors', upload.single('avatar') , async (req, res) => {
-    console.log(req.file) 
+
     const mentor = new Mentor({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
