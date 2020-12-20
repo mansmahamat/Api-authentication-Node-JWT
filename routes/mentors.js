@@ -70,33 +70,7 @@ router.get('/mentors' ,async (req, res) => {
 
 router.get('/mentor/:id',  getOneMentors.findOne)
 
-router.patch('/mentors/:id', async (req, res) => {
-    try {
-		const mentor = await Mentor.findOne({ _id: req.params.id })
-        
-        const mentor = new Mentor({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            avatar: req.file.filename,
-            //avatar: req.body.avatar,
-            title: req.body.title,
-            disponible: req.body.disponible,
-            presentation: req.body.presentation,
-            technos: req.body.technos,
-            socials: req.body.socials,
-            userId: req.body.userId
-    
-    
-          });
-        
-		await mentor.save()
-		res.send(mentor)
-	} catch {
-		res.status(404)
-		res.send({ error: "Post doesn't exist!" })
-	}
-
-})
+router.patch('/mentors/:id', updateMentors.update)
 
 router.delete('/mentors/:id', deleteMentors.delete)
 
