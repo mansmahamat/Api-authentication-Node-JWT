@@ -103,7 +103,7 @@ router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
         })
         .catch(err => {
           res.status(500).send({
-            message: "Erreur" + id
+            err
           });
         });
 })
