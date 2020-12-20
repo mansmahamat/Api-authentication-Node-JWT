@@ -16,8 +16,8 @@ const mentorSchema = new mongoose.Schema({
     avatar: {
         type: String,
         required: true,
-        max: 1024,
-        min: 6
+        //max: 1024,
+        //min: 6
     },
     title: {
         type: String,

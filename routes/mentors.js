@@ -4,14 +4,40 @@ const deleteMentors = require('../controllers/deleteMentors');
 const getOneMentors = require('../controllers/getOneMentors');
 const Mentor = require('../models/Mentor');
 const verifyToken = require('./verifyToken');
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+    destination: function(req,file,cb){
+        cb(null, './uploads');
+    },
+    filename: function(req,file,cb){
+        cb(null,  file.originalname)
+    },
+});
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'images/jpg' || file.mimetype === 'images/jpeg' || file.mimetype === 'images/png' ){
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }        
+};
 
 
 
-router.post('/mentors', async (req, res) => {
+const upload = multer({storage: storage} )
+
+
+
+
+
+router.post('/mentors', upload.single('avatar') , async (req, res) => {
+    console.log(req.file) 
     const mentor = new Mentor({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        avatar: req.body.avatar,
+        avatar: req.file.filename,
+        //avatar: req.body.avatar,
         title: req.body.title,
         disponible: req.body.disponible,
         presentation: req.body.presentation,
