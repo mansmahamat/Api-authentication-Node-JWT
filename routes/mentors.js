@@ -70,7 +70,7 @@ router.get('/mentors' ,async (req, res) => {
 
 router.get('/mentor/:id',  getOneMentors.findOne)
 
-router.patch('/mentors/:id',(req, res) => {
+router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
     if (!req.body) {
         return res.status(400).send({
           message: "Remplissez les champs pour une modification"
