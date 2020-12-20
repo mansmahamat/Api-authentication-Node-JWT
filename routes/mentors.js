@@ -70,7 +70,7 @@ router.get('/mentors' ,async (req, res) => {
 
 router.get('/mentor/:id',  getOneMentors.findOne)
 
-router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
+router.patch('/mentors/:id',(req, res) => {
     if (!req.body) {
         return res.status(400).send({
           message: "Remplissez les champs pour une modification"
@@ -93,7 +93,7 @@ router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
 
       });
     
-      Mentor.findByIdAndUpdate(id, mentor, { useFindAndModify: false })
+      Mentor.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
         .then(data => {
           if (!data) {
             res.status(404).send({
