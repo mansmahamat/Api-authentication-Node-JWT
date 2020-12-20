@@ -67,7 +67,7 @@ router.get('/mentors' ,async (req, res) => {
        
 });
 
-router.get('/mentor/:id',  getOneMentors.findOne)
+//Òrouter.get('/mentor/:id',  getOneMentors.findOne)
 
 router.patch('/mentors/:id', updateMentors.update)
 
