@@ -70,7 +70,29 @@ router.get('/mentors' ,async (req, res) => {
 
 router.get('/mentor/:id',  getOneMentors.findOne)
 
-router.patch('/mentors/:id', updateMentors.update)
+router.patch('/mentors/:id', upload.single('avatar') , async (req, res) =>{
+    const id = req.params.id;
+    const mentor = new Mentor({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        avatar: req.file.filename,
+        //avatar: req.body.avatar,
+        title: req.body.title,
+        disponible: req.body.disponible,
+        presentation: req.body.presentation,
+        technos: req.body.technos,
+        socials: req.body.socials,
+        userId: req.body.userId
+
+
+      });
+      try {
+          const savedMentor = await mentor.save();
+          res.status(201).send({mentor: mentor._id});
+      } catch (err) {
+          res.status(400).send(err);
+      } 
+})
 
 router.delete('/mentors/:id', deleteMentors.delete)
 
