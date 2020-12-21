@@ -94,8 +94,8 @@ router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
       });
     
       Mentor.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-        .then(data => {
-          if (!data) {
+        .then(mentor => {
+          if (!mentor) {
             res.status(404).send({
               message: `Ce Mentor n'existe pas`
             });
