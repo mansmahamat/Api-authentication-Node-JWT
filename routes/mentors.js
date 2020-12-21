@@ -93,7 +93,7 @@ router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
 
       });
     
-      Mentor.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+      Mentor.findByIdAndUpdate(id, mentor, { useFindAndModify: false })
         .then(mentor => {
           if (!mentor) {
             res.status(404).send({
