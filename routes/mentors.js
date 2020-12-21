@@ -78,8 +78,8 @@ router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
       }
     
       const id = req.params.id;
-      
-  
+    
+    
       Mentor.findByIdAndUpdate(id, {
         $set: {
           firstName: req.body.firstName,
