@@ -37,7 +37,7 @@ router.post('/mentors', upload.single('avatar') , async (req, res) => {
     const mentor = new Mentor({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        avatar: req.file.filename,
+        avatar: req.file.path,
         //avatar: req.body.avatar,
         title: req.body.title,
         disponible: req.body.disponible,
