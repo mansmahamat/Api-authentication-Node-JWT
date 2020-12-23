@@ -25,7 +25,7 @@ mongoose.connect(
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('uploads'))
+app.use('/uploads', express.static('uploads'))
 app.use(cors());
 
 // Route middlewware
