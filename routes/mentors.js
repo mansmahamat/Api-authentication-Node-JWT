@@ -84,7 +84,7 @@ router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
         $set: {
           firstName: req.body.firstName,
         lastName: req.body.lastName,
-        avatar: req.file.filename,
+        avatar: req.file.path,
         //avatar: req.body.avatar,
         title: req.body.title,
         disponible: req.body.disponible,
