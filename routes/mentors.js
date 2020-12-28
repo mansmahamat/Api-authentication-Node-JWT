@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const dotenv = require('dotenv');
 const updateMentors = require('../controllers/updateMentors');
 const deleteMentors = require('../controllers/deleteMentors');
 const getOneMentors = require('../controllers/getOneMentors');
@@ -6,6 +7,7 @@ const getOneMentors = require('../controllers/getOneMentors');
 const Mentor = require('../models/Mentor');
 
 const multer = require('multer')
+dotenv.config();
 
 const storage = multer.diskStorage({
     destination: function(req,file,cb){
@@ -50,6 +52,30 @@ router.post('/mentors', upload.single('avatar') , async (req, res) => {
       });
       try {
           const savedMentor = await mentor.save();
+          // SEND FILE TO CLOUDINARY
+    const cloudinary = require('cloudinary').v2
+    cloudinary.config({
+      cloud_name: process.env.CLOUD_NAME,
+      api_key: process.env.API_KEY,
+      api_secret: process.env.API_SECRET
+    })
+    
+    const path = req.file.path
+    const uniqueFilename = new Date().toISOString()
+
+    cloudinary.uploader.upload(
+      path,
+      { public_id: `avatar/${uniqueFilename}`, tags: `avatar` }, // directory and tags are optional
+      function(err, image) {
+        if (err) return res.send(err)
+        console.log('file uploaded to Cloudinary')
+        // remove file from server
+        const fs = require('fs')
+        fs.unlinkSync(path)
+        // return image details
+        res.json(image)
+      }
+    )
           res.status(201).send({mentor: mentor._id});
       } catch (err) {
           res.status(400).send(err);
