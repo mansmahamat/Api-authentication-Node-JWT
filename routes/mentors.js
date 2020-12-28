@@ -40,10 +40,7 @@ cloudinary.config({
 
 
 router.post('/mentors', upload.single('avatar') , async (req, res) => {
-  const result = await  cloudinary.uploader.upload(
-    path,
-    { public_id: `avatar/${uniqueFilename}`, tags: `avatar` }, // directory and tags are optional
-  )
+  const result = await  cloudinary.uploader.upload(req.file.path)
     const mentor = new Mentor({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
