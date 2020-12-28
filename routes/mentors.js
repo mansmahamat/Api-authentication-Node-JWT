@@ -29,53 +29,42 @@ const fileFilter = (req, file, cb) => {
 
 
 const upload = multer({storage: storage} )
-
+const cloudinary = require('cloudinary').v2
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+})
 
 
 
 
 router.post('/mentors', upload.single('avatar') , async (req, res) => {
-
+  const result = await  cloudinary.uploader.upload(
+    path,
+    { public_id: `avatar/${uniqueFilename}`, tags: `avatar` }, // directory and tags are optional
+  )
     const mentor = new Mentor({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        avatar: req.file.path,
+        avatar: result.secure_url,
         //avatar: req.body.avatar,
         title: req.body.title,
         disponible: req.body.disponible,
         presentation: req.body.presentation,
         technos: req.body.technos,
         socials: req.body.socials,
-        userId: req.body.userId
+        userId: req.body.userId,
+        cloudinary_id: result.public_id,
 
 
       });
       try {
           const savedMentor = await mentor.save();
           // SEND FILE TO CLOUDINARY
-    const cloudinary = require('cloudinary').v2
-    cloudinary.config({
-      cloud_name: process.env.CLOUD_NAME,
-      api_key: process.env.API_KEY,
-      api_secret: process.env.API_SECRET
-    })
-    
-    const path = req.file.path
-    const uniqueFilename = new Date().toISOString()
+   
 
-    cloudinary.uploader.upload(
-      path,
-      { public_id: `avatar/${uniqueFilename}`, tags: `avatar` }, // directory and tags are optional
-      function(err, image) {
-        if (err) return res.send(err)
-        console.log('file uploaded to Cloudinary')
-        // remove file from server
-        const fs = require('fs')
-        fs.unlinkSync(path)
-        // return image details
-        res.json(image)
-      }
-    )
+  
           res.status(201).send({mentor: mentor._id});
       } catch (err) {
           res.status(400).send(err);
