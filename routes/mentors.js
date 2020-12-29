@@ -15,21 +15,24 @@ const storage = multer.diskStorage({
     },
     filename: function(req,file,cb){
         cb(null,  file.originalname)
-    },
-    fileFilter: function(req, file, cb){
-      if (file.mimetype !== 'image/jpg' || file.mimetype !== 'image/jpeg' || file.mimetype !== 'image/png' ){
-         return cb(new Error('MMSomething went wrong'), false);;
-      } 
-          cb(null, false);
-              
-  }
+    }
 });
 
 
 
 
 const upload = multer({
-  storage: storage
+  storage: storage,
+  fileFilter: function (req, file, callback) {
+    var ext = path.extname(file.originalname);
+    if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+        return callback(new Error('Only images are allowed'))
+    }
+    callback(null, true)
+},
+limits:{
+    fileSize: 1024 * 1024 * 5
+}
 })
 const cloudinary = require('cloudinary').v2
 cloudinary.config({
