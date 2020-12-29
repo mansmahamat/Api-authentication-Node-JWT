@@ -82,7 +82,7 @@ router.get('/mentors' ,async (req, res) => {
 
 router.get('/mentor/:id',  getOneMentors.findOne)
 
-router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
+router.patch('/mentors/:id', upload.single('avatar'),async (req, res) => {
   
       try {
         const result = await  cloudinary.uploader.upload(req.file.path)
