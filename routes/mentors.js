@@ -87,9 +87,8 @@ router.get('/mentor/:id',  getOneMentors.findOne)
 
 router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
   try {
-    Mentor.findById(req.params.id);
-    // Delete image from cloudinary
-    await cloudinary.uploader.destroy(user.cloudinary_id);
+
+    // Delete image from cloudinar
     // Upload image to cloudinary
     const result = await cloudinary.uploader.upload(req.file.path);
     const mentor = new Mentor({
