@@ -16,15 +16,15 @@ const storage = multer.diskStorage({
     filename: function(req,file,cb){
         cb(null,  file.originalname)
     },
+    fileFilter: function(req, file, cb){
+      if (file.mimetype === 'images/jpg' || file.mimetype === 'images/jpeg' || file.mimetype === 'images/png' ){
+          cb(new Error('Mauvais format ou taille du fichier élevé'), true);
+      } else {
+          cb(null, false);
+      }        
+  }
 });
 
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'images/jpg' || file.mimetype === 'images/jpeg' || file.mimetype === 'images/png' ){
-        cb(new Error('Mauvais format ou taille du fichier élevé'), true);
-    } else {
-        cb(null, false);
-    }        
-};
 
 
 
@@ -32,8 +32,7 @@ const upload = multer({
   storage: storage,
   limits: {
     fileSize: 5 * 1024 * 1024 
-  },
-  fileFilter: fileFilter
+  }
 })
 const cloudinary = require('cloudinary').v2
 cloudinary.config({
