@@ -83,41 +83,36 @@ router.get('/mentors' ,async (req, res) => {
 router.get('/mentor/:id',  getOneMentors.findOne)
 
 router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
-    if (!req.body) {
-        return res.status(400).send({
-          message: "Remplissez les champs pour une modification"
-        });
-      }
-    
+  const result = await  cloudinary.uploader.upload(req.file.path)
       const id = req.params.id;
-    
-    
-      Mentor.findByIdAndUpdate(id, {
-        $set: {
-          firstName: req.body.firstName,
+      const data = {
+        firstName: req.body.firstName,
         lastName: req.body.lastName,
-        avatar: req.file.path,
+        avatar: result.secure_url,
         //avatar: req.body.avatar,
         title: req.body.title,
         disponible: req.body.disponible,
         presentation: req.body.presentation,
         technos: req.body.technos,
         socials: req.body.socials,
-        userId: req.body.userId
-        }
-      }, { useFindAndModify: false })
-        .then(result => {
-          if (!result) {
-            res.status(404).send({
-              message: `Ce Mentor n'existe pas`
-            });
-          } else res.send({ message: "Profil mis à jour" });
-        })
-        .catch(err => {
-          res.status(500).send({
-            err
+        userId: req.body.userId,
+
+      };
+      try {
+        Mentor.findByIdAndUpdate(req.params.id, data, {
+          useFindAndModify: false
           });
-        });
+        // SEND FILE TO CLOUDINARY
+ 
+
+
+        res.status(201).send({mentor: mentor._id});
+    } catch (err) {
+        res.status(400).send(err);
+    } 
+    
+    
+      
 })
 
 router.delete('/mentors/:id', deleteMentors.delete)
