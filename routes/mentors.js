@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'images/jpg' || file.mimetype === 'images/jpeg' || file.mimetype === 'images/png' ){
-        cb(null, true);
+        cb(new Error('Mauvais format ou taille du fichier élevé'), true);
     } else {
         cb(null, false);
     }        
@@ -31,7 +31,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   limits: {
-    fileSize: 2 * 1024 * 1024 * 1024
+    fileSize: 5 * 1024 * 1024 
   },
   fileFilter: fileFilter
 })
