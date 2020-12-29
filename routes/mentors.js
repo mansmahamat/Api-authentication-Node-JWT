@@ -91,13 +91,14 @@ router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
       }
     
       const id = req.params.id;
-    
+     const result = await  cloudinary.uploader.upload(req.file.path)
     
       Mentor.findByIdAndUpdate(id, {
+        
         $set: {
           firstName: req.body.firstName,
         lastName: req.body.lastName,
-        avatar: cloudinary.uploader.upload(req.file.path),
+        avatar: cloudinary.uploader.upload(req.file.path).secure_url,
         //avatar: req.body.avatar,
         title: req.body.title,
         disponible: req.body.disponible,
