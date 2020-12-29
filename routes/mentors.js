@@ -17,11 +17,10 @@ const storage = multer.diskStorage({
         cb(null,  file.originalname)
     },
     fileFilter: function(req, file, cb){
-      if (file.mimetype !== 'image/png') {
-        req.fileValidationError = 'goes wrong on the mimetype';
-        return cb(null, false, new Error('goes wrong on the mimetype'));
-       }
-          cb(null, true);
+      if (file.mimetype !== 'image/jpg' || file.mimetype !== 'image/jpeg' || file.mimetype !== 'image/png' ){
+         return cb(new Error('MMSomething went wrong'), false);;
+      } 
+          cb(null, false);
               
   }
 });
@@ -30,10 +29,7 @@ const storage = multer.diskStorage({
 
 
 const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 5 * 1024 * 1024 
-  }
+  storage: storage
 })
 const cloudinary = require('cloudinary').v2
 cloudinary.config({
@@ -92,9 +88,6 @@ router.get('/mentor/:id',  getOneMentors.findOne)
 router.patch('/mentors/:id', upload.single('avatar'),async (req, res) => {
   
       try {
-        if(req.fileValidationError) {
-          return res.end(req.fileValidationError);
-    }
         const id = req.params.id;
         let mentor = await Mentor.findById(id);
         // Delete image from cloudinary
