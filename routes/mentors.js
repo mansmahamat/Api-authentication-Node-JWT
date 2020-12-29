@@ -98,7 +98,7 @@ router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
         $set: {
           firstName: req.body.firstName,
         lastName: req.body.lastName,
-        avatar: cloudinary.uploader.upload(req.file.path).secure_url,
+        avatar: result.secure_url,
         //avatar: req.body.avatar,
         title: req.body.title,
         disponible: req.body.disponible,
