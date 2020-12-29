@@ -17,11 +17,11 @@ const storage = multer.diskStorage({
         cb(null,  file.originalname)
     },
     fileFilter: function(req, file, cb){
-      if (file.mimetype === 'images/jpg' || file.mimetype === 'images/jpeg' || file.mimetype === 'images/png' ){
+      if (file.mimetype !== 'images/jpg' || file.mimetype !== 'images/jpeg' || file.mimetype !== 'images/png' ){
+         return cb(new Error('MMSomething went wrong'), false);;
+      } 
           cb(null, true);
-      } else {
-          cb(null, false);
-      }        
+              
   }
 });
 
