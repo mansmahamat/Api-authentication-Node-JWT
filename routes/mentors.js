@@ -28,7 +28,13 @@ const fileFilter = (req, file, cb) => {
 
 
 
-const upload = multer({storage: storage} )
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 2 * 1024 * 1024 * 1024
+  },
+  fileFilter: fileFilter
+})
 const cloudinary = require('cloudinary').v2
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
