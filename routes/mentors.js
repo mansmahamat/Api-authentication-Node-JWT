@@ -83,7 +83,9 @@ router.get('/mentors' ,async (req, res) => {
 router.get('/mentor/:id',  getOneMentors.findOne)
 
 router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
-  const result = await  cloudinary.uploader.upload(req.file.path)
+  
+      try {
+        const result = await  cloudinary.uploader.upload(req.file.path)
       const id = req.params.id;
       const data = {
         firstName: req.body.firstName,
@@ -98,15 +100,14 @@ router.patch('/mentors/:id', upload.single('avatar'),(req, res) => {
         userId: req.body.userId,
 
       };
-      try {
-        Mentor.findByIdAndUpdate(req.params.id, data, {
+        user = await Mentor.findByIdAndUpdate(id, data, {
           useFindAndModify: false
           });
         // SEND FILE TO CLOUDINARY
  
 
 
-        res.status(201).send({mentor: mentor._id});
+        res.json(user);
     } catch (err) {
         res.status(400).send(err);
     } 
