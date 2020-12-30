@@ -80,7 +80,7 @@ router.get('/mentor/:id', async (req, res) => {
         res.status(404).send(error + "00");
     }
 });
-router.patch('/mentors/:id', upload.single('avatar'), async (req, res) => {
+router.put('/mentors/:id', upload.single('avatar'), async (req, res) => {
     const id = req.params.id;
     let mentor = await Mentor_1.default.findById(id);
     // Delete image from cloudinary
@@ -101,11 +101,7 @@ router.patch('/mentors/:id', upload.single('avatar'), async (req, res) => {
         userId: req.body.userId,
     };
     try {
-        const user = await Mentor_1.default.findByIdAndUpdate(id, data, {
-            useFindAndModify: false
-        });
-        // SEND FILE TO CLOUDINARY
-        res.json(user);
+        res.send('ooooooooook');
     }
     catch (err) {
         res.status(400).send(err + "Une erreur");
