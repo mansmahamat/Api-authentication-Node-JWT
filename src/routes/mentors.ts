@@ -121,7 +121,7 @@ router.put('/mentors/:id', upload.single('avatar'),async (req:Request, res:Respo
       try {
        res.send('ooooooooook')
     } catch (err) {
-        res.status(400).send(err + "Une erreur");
+        res.send("Une erreur");
     } 
     
     

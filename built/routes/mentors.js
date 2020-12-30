@@ -104,7 +104,7 @@ router.put('/mentors/:id', upload.single('avatar'), async (req, res) => {
         res.send('ooooooooook');
     }
     catch (err) {
-        res.status(400).send(err + "Une erreur");
+        res.send("Une erreur");
     }
 });
 router.delete('/mentors/:id', deleteMentors_1.default);
