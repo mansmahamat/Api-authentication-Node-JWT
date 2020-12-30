@@ -80,31 +80,35 @@ router.get('/mentor/:id', async (req, res) => {
         res.status(404).send(error + "00");
     }
 });
-router.put('/mentors/:id', upload.single('avatar'), async (req, res) => {
-    const id = req.params.id;
-    let mentor = await Mentor_1.default.findById(id);
-    // Delete image from cloudinary
-    // @ts-ignore
-    await cloudinary.uploader.destroy(mentor.cloudinary_id);
-    // Upload image to cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path);
-    const data = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        avatar: result.secure_url,
-        //avatar: req.body.avatar,
-        title: req.body.title,
-        disponible: req.body.disponible,
-        presentation: req.body.presentation,
-        technos: req.body.technos,
-        socials: req.body.socials,
-        userId: req.body.userId,
-    };
+router.patch('/mentors/:id', upload.single('avatar'), async (req, res) => {
     try {
-        res.send('ooooooooook');
+        const id = req.params.id;
+        let mentor = await Mentor_1.default.findById(id);
+        // Delete image from cloudinary
+        //@ts-ignore
+        await cloudinary.uploader.destroy(mentor.cloudinary_id);
+        // Upload image to cloudinary
+        const result = await cloudinary.uploader.upload(req.file.path);
+        const data = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            avatar: result.secure_url,
+            //avatar: req.body.avatar,
+            title: req.body.title,
+            disponible: req.body.disponible,
+            presentation: req.body.presentation,
+            technos: req.body.technos,
+            socials: req.body.socials,
+            userId: req.body.userId,
+        };
+        const user = await Mentor_1.default.findByIdAndUpdate(id, data, {
+            useFindAndModify: false
+        });
+        // SEND FILE TO CLOUDINARY
+        res.json(user);
     }
     catch (err) {
-        res.send("Une erreur");
+        res.status(400).send(err + "erreuuuur");
     }
 });
 router.delete('/mentors/:id', deleteMentors_1.default);
