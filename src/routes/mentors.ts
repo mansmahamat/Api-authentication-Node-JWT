@@ -104,7 +104,7 @@ router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Res
         let mentor = await Mentor.findById(id);
         // Delete image from cloudinary
         //@ts-ignore
-        //await cloudinary.uploader.destroy(mentor.cloudinary_id);
+        await cloudinary.uploader.destroy(mentor.cloudinary_id);
         // Upload image to cloudinary
         const result = await  cloudinary.uploader.upload(req.file.path)
      
@@ -125,10 +125,7 @@ router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Res
           useFindAndModify: false
           });
         // SEND FILE TO CLOUDINARY
- 
 
-
-        res.json(user);
     } catch (err) {
         res.status(400).send(err + "Une erreur est survenue");
     } 
