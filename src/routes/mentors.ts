@@ -125,9 +125,12 @@ router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Res
           useFindAndModify: false
           });
         // SEND FILE TO CLOUDINARY
+ 
 
+
+        res.json(user);
     } catch (err) {
-        res.status(400).send(err + "Une erreur est survenue");
+        res.status(400).send(err + "Une erreur");
     } 
     
     
