@@ -5,7 +5,7 @@ const Mentor = require("../models/Mentor");
 
 const getOneMentors = (req: Request, res: Response) => {
     const id = req.params.id;
-  
+
     Mentor.findById(id)
       .then((data: Document) => {
         if (!data)
@@ -19,5 +19,4 @@ const getOneMentors = (req: Request, res: Response) => {
       });
   };
 
-  export default getOneMentors;
-
+  export default getOneMentors; 
