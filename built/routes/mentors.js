@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const deleteMentors_1 = __importDefault(require("../controllers/deleteMentors"));
-const getOneMentors_1 = __importDefault(require("../controllers/getOneMentors"));
 const Mentor_1 = __importDefault(require("../models/Mentor"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const multer = require('multer');
@@ -71,28 +70,36 @@ router.get('/mentors', async (req, res) => {
         res.status(400).send(err);
     }
 });
-router.get('/mentor/:id', getOneMentors_1.default);
-router.patch('/mentors/:id', upload.single('avatar'), async (req, res) => {
+router.get('/mentor/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        let mentor = await Mentor_1.default.findById(id);
-        // Delete image from cloudinary
-        //@ts-ignore
-        //await cloudinary.uploader.destroy(mentor === null || mentor === void 0 ? void 0 : mentor.cloudinary_id);
-        // Upload image to cloudinary
-        const result = await cloudinary.uploader.upload(req.file.path);
-        const data = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            avatar: result.secure_url,
-            //avatar: req.body.avatar,
-            title: req.body.title,
-            disponible: req.body.disponible,
-            presentation: req.body.presentation,
-            technos: req.body.technos,
-            socials: req.body.socials,
-            userId: req.body.userId,
-        };
+        const fetchMentor = await Mentor_1.default.findById(id);
+        res.status(200).send(fetchMentor);
+    }
+    catch (error) {
+        res.status(404).send(error + "00");
+    }
+});
+router.patch('/mentors/:id', upload.single('avatar'), async (req, res) => {
+    const id = req.params.id;
+    let mentor = await Mentor_1.default.findById(id);
+    // Delete image from cloudinary
+    //await cloudinary.uploader.destroy(mentor.cloudinary_id);
+    // Upload image to cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const data = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        avatar: result.secure_url,
+        //avatar: req.body.avatar,
+        title: req.body.title,
+        disponible: req.body.disponible,
+        presentation: req.body.presentation,
+        technos: req.body.technos,
+        socials: req.body.socials,
+        userId: req.body.userId,
+    };
+    try {
         const user = await Mentor_1.default.findByIdAndUpdate(id, data, {
             useFindAndModify: false
         });
@@ -100,7 +107,7 @@ router.patch('/mentors/:id', upload.single('avatar'), async (req, res) => {
         res.json(user);
     }
     catch (err) {
-        res.status(400).send(err);
+        res.status(400).send(err + "Une erreur");
     }
 });
 router.delete('/mentors/:id', deleteMentors_1.default);
