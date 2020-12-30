@@ -86,7 +86,16 @@ router.get('/mentors' ,async (req:Request, res: Response) => {
        
 });
 
-router.get('/mentor/:id',  getOneMentors)
+router.get('/mentor/:id',  async (req:Request, res: Response) => {
+  try {
+    const id = req.params.id;
+  
+   const fetchMentor= await Mentor.findById(id)
+    res.status(200).send(fetchMentor)
+  } catch (error) {
+    res.status(404).send(error + "00");
+  }
+})
 
 router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Response) => {
   

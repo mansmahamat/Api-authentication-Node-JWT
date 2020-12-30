@@ -5,7 +5,7 @@ const Mentor = require("../models/Mentor");
 
 const getOneMentors = (req: Request, res: Response) => {
     const id = req.params.id;
-
+  
     Mentor.findById(id)
       .then((data: Document) => {
         if (!data)
@@ -17,6 +17,7 @@ const getOneMentors = (req: Request, res: Response) => {
           .status(500)
           .send({ message: "Error retrieving Tutorial with id=" + id });
       });
+
   };
 
-  export default getOneMentors; 
+  export default getOneMentors;
