@@ -13,16 +13,19 @@ router.post('/mentors', async (req, res) => {
     const mentor = new Mentor_1.default({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        avatar: req.body.avatar,
+        avatar: result.secure_url,
+        //avatar: req.body.avatar,
         title: req.body.title,
         disponible: req.body.disponible,
         presentation: req.body.presentation,
         technos: req.body.technos,
         socials: req.body.socials,
-        userId: req.body.userId
+        userId: req.body.userId,
+        cloudinary_id: result.public_id,
     });
     try {
         const savedMentor = await mentor.save();
+        // SEND FILE TO CLOUDINARY
         res.status(201).send({ mentor: mentor._id });
     }
     catch (err) {

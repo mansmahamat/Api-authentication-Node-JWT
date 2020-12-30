@@ -25,6 +25,7 @@ mongoose_1.default.connect(process.env.DB_CONNECT, {
 // Middleware
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
+app.use('/uploads', express_1.default.static('uploads'));
 app.use(cors_1.default());
 // Route middlewware
 app.use('/api/user', authRoute);

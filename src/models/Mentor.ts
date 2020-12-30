@@ -16,8 +16,8 @@ const mentorSchema = new Schema({
     avatar: {
         type: String,
         required: true,
-        max: 1024,
-        min: 6
+        //max: 1024,
+        //min: 6
     },
     title: {
         type: String,
@@ -54,6 +54,10 @@ const mentorSchema = new Schema({
         required: false,
         max: 1024,
         min: 6
+    },
+    cloudinary_id : {
+        type: String,
+        required: false
     },
     date: {
         type: Date,

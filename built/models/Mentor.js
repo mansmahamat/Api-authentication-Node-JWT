@@ -36,8 +36,6 @@ const mentorSchema = new mongoose_1.Schema({
     avatar: {
         type: String,
         required: true,
-        max: 1024,
-        min: 6
     },
     title: {
         type: String,
@@ -74,6 +72,10 @@ const mentorSchema = new mongoose_1.Schema({
         required: false,
         max: 1024,
         min: 6
+    },
+    cloudinary_id: {
+        type: String,
+        required: false
     },
     date: {
         type: Date,
