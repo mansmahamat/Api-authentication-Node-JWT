@@ -101,10 +101,9 @@ router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Res
   const id = req.params.id;
   let mentor = await Mentor.findById(id);
   // Delete image from cloudinary
-  //@ts-ignore
-  await cloudinary.uploader.destroy(mentor.cloudinary_id);
+  //await cloudinary.uploader.destroy(mentor.cloudinary_id);
   // Upload image to cloudinary
-  const result = await  cloudinary.uploader.upload(req.file.path)
+  const result = await cloudinary.uploader.upload(req.file.path)
   const data = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
