@@ -105,7 +105,7 @@ router.patch('/mentors/:id', upload.single('avatar'), async (req, res) => {
             useFindAndModify: false
         });
         // SEND FILE TO CLOUDINARY
-        res.json(user);
+        // res.json(user);
     }
     catch (err) {
         res.status(400).send(err + "erreuuuur");
