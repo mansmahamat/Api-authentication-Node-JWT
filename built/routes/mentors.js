@@ -101,9 +101,7 @@ router.patch('/mentors/:id', upload.single('avatar'), async (req, res) => {
         userId: req.body.userId,
     };
     try {
-        const user = await Mentor_1.default.findByIdAndUpdate(id, data, {
-            useFindAndModify: false
-        });
+        const user = await Mentor_1.default.findByIdAndUpdate(id, data);
         // SEND FILE TO CLOUDINARY
         res.json(user);
     }
