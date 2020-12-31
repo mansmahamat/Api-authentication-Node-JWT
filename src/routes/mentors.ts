@@ -98,9 +98,7 @@ router.get('/mentor/:id',  async (req:Request, res: Response) => {
 })
 
 router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Response) => {
-  
-      try {
-        const id = req.params.id;
+  const id = req.params.id;
         let mentor = await Mentor.findById(id);
         // Delete image from cloudinary
         //@ts-ignore
@@ -121,6 +119,8 @@ router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Res
         userId: req.body.userId,
 
       };
+      try {
+        
         const user = await Mentor.findByIdAndUpdate(id, data, {
           useFindAndModify: false
           });
@@ -128,7 +128,7 @@ router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Res
  
 
 
-       // res.json(user);
+       res.json(user);
     } catch (err) {
         res.status(400).send(err + "erreuuuur");
     } 
