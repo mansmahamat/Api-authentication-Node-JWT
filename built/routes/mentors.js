@@ -81,27 +81,29 @@ router.get('/mentor/:id', async (req, res) => {
     }
 });
 router.patch('/mentors/:id', upload.single('avatar'), async (req, res) => {
-    const id = req.params.id;
-    let mentor = await Mentor_1.default.findById(id);
-    // Delete image from cloudinary
-    //@ts-ignore
-    await cloudinary.uploader.destroy(mentor.cloudinary_id);
-    // Upload image to cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path);
-    const data = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        avatar: result.secure_url,
-        //avatar: req.body.avatar,
-        title: req.body.title,
-        disponible: req.body.disponible,
-        presentation: req.body.presentation,
-        technos: req.body.technos,
-        socials: req.body.socials,
-        userId: req.body.userId,
-    };
     try {
-        const user = await Mentor_1.default.findByIdAndUpdate(id, data);
+        const id = req.params.id;
+        let mentor = await Mentor_1.default.findById(id);
+        // Delete image from cloudinary
+        //@ts-ignore
+        await cloudinary.uploader.destroy(mentor.cloudinary_id);
+        // Upload image to cloudinary
+        const result = await cloudinary.uploader.upload(req.file.path);
+        const data = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            avatar: result.secure_url,
+            //avatar: req.body.avatar,
+            title: req.body.title,
+            disponible: req.body.disponible,
+            presentation: req.body.presentation,
+            technos: req.body.technos,
+            socials: req.body.socials,
+            userId: req.body.userId,
+        };
+        const user = await Mentor_1.default.findByIdAndUpdate(id, data, {
+            useFindAndModify: false
+        });
         // SEND FILE TO CLOUDINARY
         res.json(user);
     }
