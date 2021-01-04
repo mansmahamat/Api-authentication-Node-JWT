@@ -96,19 +96,13 @@ router.get('/mentor/:id',  async (req:Request, res: Response) => {
     res.status(404).send(error + "00");
   }
 })
-
-router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Response) => {
-  
-      try {
-        const id = req.params.id;
-        let mentor = await Mentor.findById(id);
-        // Delete image from cloudinary
-        //@ts-ignore
-        await cloudinary.uploader.destroy(mentor.cloudinary_id);
-        // Upload image to cloudinary
-        const result = await  cloudinary.uploader.upload(req.file.path)
-     
-      const data = {
+router.patch('/mentors/:id', upload.single('avatar') , async (req: Request, res: Response) => {
+  const result = await  cloudinary.uploader.upload(req.file.path)
+  const id = req.params.id;
+  const mentorData = await Mentor.findById(id);
+  //@ts-ignore
+  await cloudinary.uploader.destroy(mentorData.cloudinary_id);
+    const mentor = new Mentor({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         avatar: result.secure_url,
@@ -119,23 +113,25 @@ router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Res
         technos: req.body.technos,
         socials: req.body.socials,
         userId: req.body.userId,
-
-      };
-        const user = await Mentor.findByIdAndUpdate(id, data, {
-          new: true
-          });
-        // SEND FILE TO CLOUDINARY
- 
-
-
-       //res.json(user);
-    } catch (err) {
-        res.status(400).send(err + "erreuuuur");
-    } 
+        cloudinary_id: result.public_id,
     
-    
-      
-})
+
+
+      });
+      try {
+          
+          await mentor.updateOne(id);
+          // SEND FILE TO CLOUDINARY
+   
+
+  
+          res.status(200).send({mentor: mentor._id});
+      } catch (err) {
+          res.status(400).send(err);
+      } 
+  });
+
+
 
 router.delete('/mentors/:id', deleteMentors)
 
