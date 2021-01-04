@@ -122,7 +122,7 @@ router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Res
 
       };
         const user = await Mentor.findByIdAndUpdate(id, data, {
-          useFindAndModify: false
+          new: true
           });
         // SEND FILE TO CLOUDINARY
  
