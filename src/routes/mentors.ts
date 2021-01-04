@@ -130,7 +130,7 @@ router.patch('/mentors/:id', upload.single('avatar'),async (req:Request, res:Res
 
        res.json(user);
     } catch (err) {
-        res.status(400).send(err + "erreuuuur");
+        res.send(err + "erreuuuur");
     } 
     
     
